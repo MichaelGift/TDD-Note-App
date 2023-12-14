@@ -2,11 +2,11 @@
 
 ## User Stories and Acceptance Criteria
 
-| Feature | User Story | Acceptance Criteria |
-|---------|------------|-------------|
-| **Creating a Note** | As a user, I want to be able to create a new note. | - The user should see a "New Note" button.<br> - Clicking the "New Note" button should open a screen with fields for the note title and content. <br> - After entering the title and content, the user should be able to save the note. |
-| **Editing a Note** | As a user, I want to be able to edit an existing note. | - The user should be able to select an existing note for editing. <br> - The editing screen should display the current title and content of the selected note.  <br> - After making changes, the user should be able to save the edited note. |
-| **Deleting a Note** | As a user, I want to be able to delete a note. |  - The user should be able to select and delete an existing note. <br> - Deleting a note should remove it from the list. |
+| Feature             | User Story                                             | Acceptance Criteria                                                                                                                                                                                                                           |
+|---------------------|--------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Creating a Note** | As a user, I want to be able to create a new note.     | - The user should see a "New Note" button.<br> - Clicking the "New Note" button should open a screen with fields for the note title and content. <br> - After entering the title and content, the user should be able to save the note.       |
+| **Editing a Note**  | As a user, I want to be able to edit an existing note. | - The user should be able to select an existing note for editing. <br> - The editing screen should display the current title and content of the selected note.  <br> - After making changes, the user should be able to save the edited note. |
+| **Deleting a Note** | As a user, I want to be able to delete a note.         | - The user should be able to select and delete an existing note. <br> - Deleting a note should remove it from the list.                                                                                                                       |
 
 
 ## Functional Requirements
