@@ -8,11 +8,12 @@ class NoteTest {
     private lateinit var note : Note
     @Before
     fun create_sample_note(){
-        note = Note("Title", "Content")
+        note = Note(1,"Title", "Content")
     }
 
     @Test
-    fun create_note_with_title_and_content() {
+    fun create_note_with_title_content_and_id() {
+        assertEquals(1, note.id)
         assertEquals("Title", note.title)
         assertEquals("Content", note.content)
     }
