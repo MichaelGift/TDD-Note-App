@@ -29,4 +29,4 @@
 ## Assumptions and Constraints
 
 - The minimum SDK is 26
-- The target SDK is 33
+- The target SDK is 34
