@@ -22,14 +22,10 @@ class AddEditNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _noteTitle = mutableStateOf(
-        TextFieldState(hint = "Title")
-    )
+    private val _noteTitle = mutableStateOf(TextFieldState())
     val noteTitle: State<TextFieldState> = _noteTitle
 
-    private val _noteContent = mutableStateOf(
-        TextFieldState(hint = "Start typing")
-    )
+    private val _noteContent = mutableStateOf(TextFieldState())
     val noteContent: State<TextFieldState> = _noteContent
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -50,12 +46,8 @@ class AddEditNoteViewModel @Inject constructor(
 
     private suspend fun getNote(noteId: Int) {
         useCase.getNoteById(noteId)?.also { note ->
-            _noteTitle.value = noteTitle.value.copy(
-                text = note.title, showHint = false
-            )
-            _noteContent.value = noteContent.value.copy(
-                text = note.content, showHint = false
-            )
+            _noteTitle.value = noteTitle.value.copy(text = note.title)
+            _noteContent.value = noteContent.value.copy(text = note.content)
         }
     }
 
@@ -77,18 +69,6 @@ class AddEditNoteViewModel @Inject constructor(
 
             is AddEditEvent.EditNoteContent -> {
                 _noteContent.value = noteContent.value.copy(text = event.noteContent)
-            }
-
-            is AddEditEvent.ChangeTitleFocus -> {
-                _noteTitle.value = noteTitle.value.copy(
-                    showHint = !event.focusState.isFocused && noteTitle.value.text.isBlank()
-                )
-            }
-
-            is AddEditEvent.ChangeContentFocus -> {
-                _noteTitle.value = noteTitle.value.copy(
-                    showHint = !event.focusState.isFocused && noteContent.value.text.isBlank()
-                )
             }
 
             is AddEditEvent.SaveNote -> {
