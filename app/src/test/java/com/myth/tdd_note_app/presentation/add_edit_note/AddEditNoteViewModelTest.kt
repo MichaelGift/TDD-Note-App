@@ -1,5 +1,6 @@
 package com.myth.tdd_note_app.presentation.add_edit_note
 
+import androidx.compose.ui.focus.FocusState
 import androidx.lifecycle.SavedStateHandle
 import com.myth.tdd_note_app.MainDispatcherRule
 import com.myth.tdd_note_app.domain.usecases.UseCases
@@ -20,7 +21,6 @@ class AddEditNoteViewModelTest {
     private val savedStateHandle = SavedStateHandle(mapOf("noteId" to 1))
     private lateinit var useCase: UseCases
     private lateinit var viewModel: AddEditNoteViewModel
-
     @Before
     fun setUp() {
         useCase = UseCases(mock(), mock(), mock(), mock())
@@ -33,19 +33,19 @@ class AddEditNoteViewModelTest {
     }
 
     @Test
-    fun onEvent_EditNoteTitle_EditsNoteTitles() {
+    fun onEvent_editNoteTitle_editsNoteTitles() {
         viewModel.onEvent(AddEditEvent.EditNoteTitle("New Title"))
         assertEquals("New Title", viewModel.noteTitle.value.text)
     }
 
     @Test
-    fun onEvent_EditNoteContent_EditsNoteContent(){
+    fun onEvent_editNoteContent_editsNoteContent(){
         viewModel.onEvent(AddEditEvent.EditNoteContent("New Content"))
         assertEquals("New Content", viewModel.noteContent.value.text)
     }
 
     @Test
-    fun onEvent_SaveNote_triggersSaveNoteEvent() = runTest {
+    fun onEvent_saveNote_triggersSaveNoteEvent() = runTest {
         viewModel.onEvent(AddEditEvent.SaveNote)
         val event =  viewModel.eventFlow.first()
         assertTrue(event is  UiEvent.SaveNote)
