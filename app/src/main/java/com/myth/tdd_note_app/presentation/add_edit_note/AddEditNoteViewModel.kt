@@ -11,6 +11,8 @@ import com.myth.tdd_note_app.presentation.add_edit_note.events.AddEditEvent
 import com.myth.tdd_note_app.presentation.add_edit_note.events.UiEvent
 import com.myth.tdd_note_app.presentation.add_edit_note.states.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -72,12 +74,12 @@ class AddEditNoteViewModel @Inject constructor(
             }
 
             is AddEditEvent.SaveNote -> {
-                viewModelScope.launch {
+                CoroutineScope(Dispatchers.IO).launch {
                     try {
                         saveNote()
                         _eventFlow.emit(UiEvent.SaveNote)
+                    } catch (_: Exception) {
                     }
-                    catch (_: Exception){}
                 }
             }
         }
