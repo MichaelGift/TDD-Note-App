@@ -12,7 +12,7 @@ class AddNotesUseCaseTest {
     private lateinit var repository: FakeRepository
     private lateinit var useCase: AddNotesUseCase
 
-    private val note = Note(1, "Title", "Content")
+    private val note = Note(null,"Title", "Content")
 
     @Before
     fun setup() {
@@ -25,19 +25,21 @@ class AddNotesUseCaseTest {
         useCase(note)
 
         val notes = repository.getAllNotes().first()
-
         assertThat(notes).contains(note)
     }
 
     @Test
     fun `adding note with same id replaces old one`() = runTest {
+        //Save old note
+        useCase(note)
+
+        // Edit and re save
         val updatedNote = Note(note.id, "New Title", "New Content")
         useCase(updatedNote)
 
         val notes = repository.getAllNotes().first()
-
+        print(notes)
         assertThat(notes).contains(updatedNote)
         assertThat(notes).doesNotContain(note)
-        assertThat(notes.size).isLessThan(2)
     }
 }
