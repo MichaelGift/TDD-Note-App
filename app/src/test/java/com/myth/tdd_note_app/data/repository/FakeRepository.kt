@@ -7,22 +7,38 @@ import kotlinx.coroutines.flow.flow
 
 class FakeRepository : NoteRepository {
     private val notes = mutableListOf<Note>()
+    private var currentId = 1
 
     override fun getAllNotes(): Flow<List<Note>> = flow { emit(notes) }
 
     override suspend fun getNoteById(id: Int): Note? {
-        return notes.firstOrNull { note ->  note.id == id }
+        return notes.firstOrNull { note -> note.id == id }
     }
 
     override suspend fun insertNote(note: Note) {
-        notes.add(note)
+        if (note.id == null) {
+            note.id = currentId++
+        }
+
+        val existingNoteIndex = notes.indexOfFirst { it.id == note.id }
+
+        if (existingNoteIndex != -1) {
+            notes[existingNoteIndex] = note
+        } else {
+            notes.add(note)
+        }
     }
 
     override suspend fun deleteNote(note: Note) {
         notes.remove(note)
     }
 
-    fun addSampleNotes(note: List<Note>){
-        notes.addAll(note)
+    fun addSampleNotes(noteList: List<Note>) {
+        noteList.forEach { note ->
+            if (note.id == null) {
+                note.id = currentId++
+            }
+        }
+        notes.addAll(noteList)
     }
 }
