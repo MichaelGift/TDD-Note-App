@@ -39,7 +39,7 @@ class NotesListViewModel @Inject constructor(
                 CoroutineScope(Dispatchers.IO).launch {
                     deleteNote(event.note)
                     recentlyDeletedNote = event.note
-                    _eventFlow.emit(UiEvent.DeleteNote)
+                    _eventFlow.emit(UiEvent.DeleteNote("Note Deleted"))
                 }
             }
 
