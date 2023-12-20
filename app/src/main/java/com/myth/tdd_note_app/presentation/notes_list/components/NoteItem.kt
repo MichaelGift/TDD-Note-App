@@ -14,12 +14,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
@@ -31,45 +36,56 @@ import com.myth.tdd_note_app.ui.theme.TDDNoteAppTheme
 @Composable
 fun NoteItem(
     note: Note,
+    modifier: Modifier = Modifier,
     onDeleteClick: () -> Unit
 ) {
-    Card(
-        elevation = CardDefaults.cardElevation(8.dp),
-        modifier = Modifier.padding(all = 2.dp),
-        shape = RoundedCornerShape(12.dp),
-    ) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Box(
-                modifier = Modifier
-                    .width(8.dp)
-                    .background(Color.Red)
-                    .fillMaxHeight()
-            )
+    Box(modifier = modifier) {
+        Card(
+            elevation = CardDefaults.cardElevation(8.dp),
+            modifier = Modifier.padding(all = 4.dp),
+            shape = RoundedCornerShape(8.dp),
+        ) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Box(
+                    modifier = Modifier
+                        .width(8.dp)
+                        .background(Color.Red)
+                        .fillMaxHeight()
+                )
 
-            Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(4.dp))
 
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = note.title,
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = note.title,
-                        style = MaterialTheme.typography.headlineSmall,
-                        maxLines = 1,
+                        text = note.content,
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 8,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = note.content,
-                    style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(modifier = Modifier.height(4.dp))
             }
+        }
+        IconButton(
+            onClick = onDeleteClick,
+            modifier = Modifier.align(Alignment.BottomEnd)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Delete Note"
+            )
         }
     }
 }
@@ -88,7 +104,7 @@ fun PreviewNoteItem() {
         Surface {
             LazyColumn {
                 items(notes) { note ->
-                    NoteItem(note = note) {}
+                    NoteItem(note = note, Modifier) {}
                 }
             }
         }
