@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myth.tdd_note_app.domain.model.Note
 import com.myth.tdd_note_app.domain.usecases.UseCases
-import com.myth.tdd_note_app.presentation.add_edit_note.events.UiEvent
+import com.myth.tdd_note_app.presentation.save_edit_note.events.UiEvent
 import com.myth.tdd_note_app.presentation.notes_list.events.NoteEvent
 import com.myth.tdd_note_app.presentation.notes_list.states.NotesState
 import dagger.hilt.android.lifecycle.HiltViewModel
