@@ -33,6 +33,14 @@ class FakeRepository : NoteRepository {
         notes.remove(note)
     }
 
+    override fun searchNotes(query: String): Flow<List<Note>> = flow{
+        val filteredNotes = notes.filter { note ->
+            note.title.contains(query, ignoreCase = true) ||
+                    note.content.contains(query, ignoreCase = true)
+        }
+        emit(filteredNotes)
+    }
+
     fun addSampleNotes(noteList: List<Note>) {
         noteList.forEach { note ->
             if (note.id == null) {
