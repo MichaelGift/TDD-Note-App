@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -23,18 +22,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.myth.tdd_note_app.presentation.save_edit_note.components.HintTextField
+import com.myth.tdd_note_app.presentation.notes_list.components.HintTextField
 import com.myth.tdd_note_app.presentation.save_edit_note.events.AddEditEvent
 import com.myth.tdd_note_app.presentation.save_edit_note.events.UiEvent
 import kotlinx.coroutines.flow.collectLatest
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SaveEditScreen(
     navController: NavController,
-    viewModel: AddEditNoteViewModel = hiltViewModel()
+    viewModel: SaveEditViewModel = hiltViewModel()
 ) {
     val titleState = viewModel.noteTitle.value
     val contentState = viewModel.noteContent.value
