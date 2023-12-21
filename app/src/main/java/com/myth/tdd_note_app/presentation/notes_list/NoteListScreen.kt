@@ -1,37 +1,39 @@
 package com.myth.tdd_note_app.presentation.notes_list
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.EditNote
+import androidx.compose.material3.DismissDirection
+import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
+import androidx.compose.material3.SwipeToDismiss
+import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -47,6 +49,7 @@ fun NoteListScreen(
     navController: NavController, viewModel: NotesListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+//    val query = viewModel.query.value
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -61,60 +64,97 @@ fun NoteListScreen(
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Note")
             }
         },
-    ) {
+        topBar = {
+
+//            SearchBar(
+//                modifier = Modifier.fillMaxWidth(),
+//                query = query.text,
+//                onQueryChange = {viewModel.onEvent(NoteEvent.SearchNote(it))},
+//                onSearch = {viewModel.onEvent(NoteEvent.SearchNote(it))},
+//                active = state.isSearching,
+//                onActiveChange = {viewModel.onEvent(NoteEvent.ToggleSearchBar)},
+//                placeholder = { Text(text = "Search...")}
+//            ){}
+//            CustomTopAppBar(
+//                searchActive = state.isSearching,
+//                searchText = query.text,
+//                onValueChange = { viewModel.onEvent(NoteEvent.SearchNote(it))},
+//                onClickSearchIcon = { viewModel.onEvent(NoteEvent.ToggleSearchBar)}
+//            )
+        }
+    ) { it ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(it)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(text = "Your notes", style = MaterialTheme.typography.titleLarge)
-
-                Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
-                }
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Default.Sort, contentDescription = "Sort")
-                }
-                IconButton(onClick = {/*TODO*/ }) {
-                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More")
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize()
+            Spacer(modifier = Modifier.height(8.dp))
+            LazyColumn(
+                state = rememberLazyListState(), modifier = Modifier.fillMaxSize()
             ) {
                 items(state.notes) { note ->
-                    NoteItem(
-                        note = note,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                navController.navigate(
-                                    Screen.SaveEditScreen.route +
-                                            "?noteId=${note.id}"
-                                )
-                            },
-                        onDeleteClick = {
-                            viewModel.onEvent(NoteEvent.DeleteNote(note))
-                            scope.launch {
-                                val result = snackBarHostState.showSnackbar(
-                                    message = "Note deleted",
-                                    actionLabel = "Undo"
-                                )
-                                if (result == SnackbarResult.ActionPerformed)
-                                    viewModel.onEvent(NoteEvent.RestoreNote)
+
+                    val dismissState = rememberDismissState(
+                        confirmValueChange = {
+                            if (it == DismissValue.DismissedToStart) {
+                                viewModel.onEvent(NoteEvent.DeleteNote(note))
+                                scope.launch {
+                                    val result = snackBarHostState.showSnackbar(
+                                        message = "Note deleted", actionLabel = "Undo"
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) viewModel.onEvent(
+                                        NoteEvent.RestoreNote
+                                    )
+                                }
                             }
+                            if (it == DismissValue.DismissedToEnd) {
+                                navigateToNote(navController, note.id)
+                            }
+                            false
                         })
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    SwipeToDismiss(state = dismissState, background = {
+                        val color = when (dismissState.dismissDirection) {
+                            DismissDirection.EndToStart -> Color.Red
+                            DismissDirection.StartToEnd -> Color.Green
+                            else -> Color.Transparent
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(all = 4.dp)
+                                .background(color)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Delete",
+                                modifier = Modifier
+                                    .align(Alignment.CenterEnd)
+                                    .padding(all = 16.dp)
+                            )
+                            Icon(
+                                imageVector = Icons.Default.EditNote,
+                                contentDescription = "Edit",
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart)
+                                    .padding(all = 16.dp)
+                            )
+                        }
+                    }, dismissContent = {
+                        NoteItem(note = note,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(all = 4.dp)
+                                .clickable { navigateToNote(navController, note.id) })
+                    })
                 }
             }
         }
     }
+}
+
+fun navigateToNote(navController: NavController, id: Int?) {
+    navController.navigate(
+        Screen.SaveEditScreen.route + "?noteId=$id"
+    )
 }
