@@ -8,6 +8,7 @@ import com.myth.tdd_note_app.domain.usecases.AddNotesUseCase
 import com.myth.tdd_note_app.domain.usecases.DeleteNoteUseCase
 import com.myth.tdd_note_app.domain.usecases.GetNoteByIdUseCase
 import com.myth.tdd_note_app.domain.usecases.GetNotesUseCase
+import com.myth.tdd_note_app.domain.usecases.SearchNoteUseCase
 import com.myth.tdd_note_app.domain.usecases.UseCases
 import com.myth.tdd_note_app.presentation.notes_list.events.NoteEvent
 import kotlinx.coroutines.flow.first
@@ -25,6 +26,7 @@ class NotesListViewModelTest {
     private lateinit var getNotes: GetNotesUseCase
     private lateinit var deleteNotes: DeleteNoteUseCase
     private lateinit var getNoteById: GetNoteByIdUseCase
+    private lateinit var search: SearchNoteUseCase
     private lateinit var useCase: UseCases
     private lateinit var viewModel: NotesListViewModel
 
@@ -40,9 +42,10 @@ class NotesListViewModelTest {
         deleteNotes = DeleteNoteUseCase(repository)
         getNotes = GetNotesUseCase(repository)
         getNoteById = GetNoteByIdUseCase(repository)
+        search = SearchNoteUseCase(repository)
 
         useCase =
-            UseCases(addNotes, deleteNotes, getNotes, getNoteById)
+            UseCases(addNotes, deleteNotes, getNotes, getNoteById,search)
         viewModel = NotesListViewModel(useCase)
 
         repository.addSampleNotes(samples)
@@ -71,6 +74,20 @@ class NotesListViewModelTest {
         val notes = repository.getAllNotes().first()
 
         assertThat(notes).contains(note1)
+    }
+
+    @Test
+    fun `onEvent search search for a note`()= runTest{
+        viewModel.onEvent(NoteEvent.SearchNote("Title1"))
+        val notes  = viewModel.state.value.notes
+        assertThat(notes).contains(note1)
+    }
+
+    @Test
+    fun `non existent search returns an empty list` (){
+        viewModel.onEvent(NoteEvent.SearchNote("Title3"))
+        val notes  = viewModel.state.value.notes
+        assertThat(notes).isEmpty()
     }
 
 }
