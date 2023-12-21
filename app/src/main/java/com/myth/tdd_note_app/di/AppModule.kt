@@ -9,6 +9,7 @@ import com.myth.tdd_note_app.domain.usecases.AddNotesUseCase
 import com.myth.tdd_note_app.domain.usecases.DeleteNoteUseCase
 import com.myth.tdd_note_app.domain.usecases.GetNoteByIdUseCase
 import com.myth.tdd_note_app.domain.usecases.GetNotesUseCase
+import com.myth.tdd_note_app.domain.usecases.SearchNoteUseCase
 import com.myth.tdd_note_app.domain.usecases.UseCases
 import dagger.Module
 import dagger.Provides
@@ -42,7 +43,8 @@ object AppModule {
             getAllNotes = GetNotesUseCase(repository),
             deleteNote = DeleteNoteUseCase(repository),
             addNote = AddNotesUseCase(repository),
-            getNoteById = GetNoteByIdUseCase(repository)
+            getNoteById = GetNoteByIdUseCase(repository),
+            search = SearchNoteUseCase(repository)
         )
     }
 }
