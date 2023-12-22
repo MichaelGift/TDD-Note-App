@@ -16,6 +16,10 @@ class GetNotesUseCaseTest {
     private val note2 = Note(2, "Title2", "Content2")
     private val samples = listOf(note1, note2)
 
+    /**
+     * Initializes the required units required for testing,
+     * Manually injects the repository dependency
+     * Pre-populates the repository with sample content*/
     @Before
     fun setup() {
         repository = FakeRepository()
