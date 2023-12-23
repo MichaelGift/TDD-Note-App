@@ -40,48 +40,50 @@ class SaveEditViewModel @Inject constructor(
             if (noteId == -1) return@let
 
             currentNoteId = noteId
-            viewModelScope.launch {
-                getNote(noteId!!)
-            }
+            viewModelScope.launch { getNote(noteId!!) }
         }
     }
 
     private suspend fun getNote(noteId: Int) {
         useCase.getNoteById(noteId)?.also { note ->
-            _noteTitle.value = noteTitle.value.copy(text = note.title)
-            _noteContent.value = noteContent.value.copy(text = note.content)
+            updateNoteTitle(note.title)
+            updateNoteContent(note.content)
         }
-    }
-
-    private suspend fun saveNote() {
-        useCase.addNote(
-            Note(
-                id = currentNoteId,
-                title = noteTitle.value.text,
-                content = noteContent.value.text
-            )
-        )
     }
 
     fun onEvent(event: AddEditEvent) {
         when (event) {
             is AddEditEvent.EditNoteTitle -> {
-                _noteTitle.value = noteTitle.value.copy(text = event.noteTitle)
+                updateNoteTitle(event.noteTitle)
             }
 
             is AddEditEvent.EditNoteContent -> {
-                _noteContent.value = noteContent.value.copy(text = event.noteContent)
+                updateNoteContent(event.noteContent)
             }
 
             is AddEditEvent.SaveNote -> {
                 CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        saveNote()
-                        _eventFlow.emit(UiEvent.SaveNote)
-                    } catch (_: Exception) {
-                    }
+                    saveNote()
+                    _eventFlow.emit(UiEvent.SaveNote)
                 }
             }
         }
+    }
+
+    private fun updateNoteTitle(newTitle: String) {
+        _noteTitle.value = noteTitle.value.copy(text = newTitle)
+    }
+
+    private fun updateNoteContent(newContent: String) {
+        _noteContent.value = noteContent.value.copy(text = newContent)
+    }
+
+    private suspend fun saveNote() {
+        val note = Note(
+            id = currentNoteId,
+            title = noteTitle.value.text,
+            content = noteContent.value.text
+        )
+        useCase.addNote(note)
     }
 }
