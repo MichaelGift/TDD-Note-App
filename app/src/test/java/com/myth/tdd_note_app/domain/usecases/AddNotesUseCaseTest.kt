@@ -29,7 +29,7 @@ class AddNotesUseCaseTest {
     }
 
     @Test
-    fun `adding note with same id replaces old one`() = runTest {
+    fun `adding note with same id updates old note content`() = runTest {
         //Save old note
         useCase(note)
 
@@ -38,7 +38,7 @@ class AddNotesUseCaseTest {
         useCase(updatedNote)
 
         val notes = repository.getAllNotes().first()
-        print(notes)
+
         assertThat(notes).contains(updatedNote)
         assertThat(notes).doesNotContain(note)
     }
