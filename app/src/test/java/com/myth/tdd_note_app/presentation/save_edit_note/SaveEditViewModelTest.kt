@@ -63,7 +63,8 @@ class SaveEditViewModelTest {
     }
 
     @Test
-    fun `when editing a note noteContent and noteTitle are updated correctly`() = runTest {
+    fun `when editing a note noteContent and noteTitle are updated correctly`()
+    = runTest {
         val id = 1
 
         val note = repository.getNoteById(id)
@@ -96,7 +97,8 @@ class SaveEditViewModelTest {
     }
 
     @Test
-    fun `update note on SaveNote event if currentNoteId is not null`() = runTest {
+    fun `update note on SaveNote event if currentNoteId is not null`()
+    = runTest {
         val newTitle = "Updated Note Title"
         viewModel.onEvent(AddEditEvent.EditNoteTitle(newTitle))
 
@@ -106,7 +108,6 @@ class SaveEditViewModelTest {
         viewModel.onEvent(AddEditEvent.SaveNote)
         val currentNoteId = viewModel.currentNoteId!!
         val newNote = Note(currentNoteId, newTitle, newContent)
-//        saveNote(newNote)
         val notes = repository.getAllNotes().first()
 
         assertThat(notes).contains(newNote)
