@@ -10,7 +10,7 @@
 | **Categorizing Notes**     | As a user, I want to categorize note for better organization. | - The user should be able to assign categories or tags to each note. <br>  - There should be an option to filter notes based on categories                                                                                                    ||
 | **Searching Notes**        | As a user, I want to quickly find specific notes.             | - The application should provide a search functionality<br> - Users should be able to search notes by titles,content or tags.                                                                                                                 ||
 | **Adding Images to Notes** | As a user, I want to enrich my notes by adding images.        | - The note creation/editing screen should allow users to attach images to notes.<br> - Images should be displayed within the note.                                                                                                            ||
-
+| **Setting Reminders**      | As a user, I want to set reminders for important notes.       | - Users should be able to set date and time reminders for each note. <br> - The application should notify users when a reminder is due.                                                                                                       ||
 
 ## Functional Requirements
 
