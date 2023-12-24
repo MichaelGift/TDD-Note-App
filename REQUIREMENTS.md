@@ -23,6 +23,7 @@
 | **Export and Share Options**          | As a user, I want to export and share my notes in various formats.       | - Users can export notes as text files, PDFs, or other standard formats. <br> - The application provides sharing options for sending notes via email or other communication channels                                                          ||
 | **Kanban Board for Task Management**  | As a user, I want to organize task using Kanban boards.                  | - Users can create boards and cards to manage tasks using Kanban-style interface. <br> - Drag-and-drop functionality should eb implemented for easy task management                                                                           ||
 | **Advanced Formatting and Templates** | As a user, I want advanced formatting options and customizable templates | - Rich text formatting options, include tables, columns and advanced styling, should be available. <br> - Users can create and user customizable templates for different note types                                                           ||
+| **Handwriting Recognition**           | As a user, I want the ability to write notes by hand                     | - The application should support handwriting recognition for handwritten notes. <br> - User can switch between typing and handwriting modes                                                                                                   ||
 
 ## Functional Requirements
 
