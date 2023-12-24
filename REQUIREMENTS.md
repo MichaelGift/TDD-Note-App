@@ -15,6 +15,8 @@
 | **Markdown Support**             | As a user, I want to format my notes using Markdown               | - The note editor should support basic Markdown formatting. <br> - Formatted text in the notes should be displayed appropriately                                                                                                              ||
 | **Attachments and File Support** | As a user, I want to attach files and documents to my notes       | - The note editor should allow user to attach files such as PDFs, documents or other file types<br> - Users should be able to view and download attachments within the notes.                                                                 ||
 | **Voice Notes**                  | As a user, I want the ability to add voice recording to my notes. | - The application should have a feature for recording and attaching voice notes to written notes. <br> - Users should be able to play back voice recording within the note.                                                                   ||
+| **Collaborative Editing**        | As a user, I want to collaborate on notes with others.            | - Notes can be shared with other users. <br> - Collaborators should be able to view and edit shared notes in real-time.                                                                                                                       ||
+
 
 ## Functional Requirements
 
