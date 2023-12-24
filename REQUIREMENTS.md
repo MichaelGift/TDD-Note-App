@@ -20,6 +20,7 @@
 | **Customizable Themes**          | As a user, I want to personalize the look and feel of the application. | - The application should provide a range of customizable themes. <br> - Users can choose different color schemes or create custom themes.                                                                                                     ||
 | **Integration with Calendar**    | As a user, I want to link notes to specific calendar events            | - Users can associate notes with calendar events within the application. <br> - Clicking on a note should provide a link to the associated calendar event                                                                                     ||
 | **Geotagging Support**           | As a user, I want to associate notes with specific locations           | - Users can geotag notes, linking them to specific geographic locations, <br> - The application should display a map view showing notes based on their location                                                                               ||
+| **Export and Share Options**     | As a user, I want to export and share my notes in various formats.     | - Users can export notes as text files, PDFs, or other standard formats. <br> - The application provides sharing options for sending notes via email or other communication channels                                                          ||
 
 
 ## Functional Requirements
