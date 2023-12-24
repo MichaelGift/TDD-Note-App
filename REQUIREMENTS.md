@@ -24,20 +24,7 @@
 | **Kanban Board for Task Management**  | As a user, I want to organize task using Kanban boards.                  | - Users can create boards and cards to manage tasks using Kanban-style interface. <br> - Drag-and-drop functionality should eb implemented for easy task management                                                                            ||
 | **Advanced Formatting and Templates** | As a user, I want advanced formatting options and customizable templates | - Rich text formatting options, include tables, columns and advanced styling, should be available. <br> - Users can create and user customizable templates for different note types                                                            ||
 | **Handwriting Recognition**           | As a user, I want the ability to write notes by hand                     | - The application should support handwriting recognition for handwritten notes. <br> - User can switch between typing and handwriting modes                                                                                                    ||
-| **Security**                          | As a user, I want my notes to be secure                                  | - The app should implement secure authentication to access notes <br> - Notes should be stored securely, and the app should have a backup and restore feature. <br> The user's data should be private and not accessible to unauthorizes user. ||
-
-## Functional Requirements
-
-- The application should support CRUD operations for notes (Create, Read, Update, Delete).
-- A note should have a title and content.
-- Users should be able to view a list of all created notes.
-- The application should provide a clean and intuitive user interface.
-
-## Non-functional Requirements
-
-- The application should be responsive and work on different screen sizes.
-- The user interface should follow material design principles.
-- The application should handle data persistence reliably.
+| **Security**                          | As a user, I want my notes to be secure                                  | - The app should implement secure authentication to access notes <br> - Notes should be stored securely, and the app should have a backup and restore feature. <br> The user's data should be private and not accessible to unauthorized user. ||
 
 ## Dependencies
 
