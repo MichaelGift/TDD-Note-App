@@ -11,8 +11,8 @@
 | **Searching Notes**        | As a user, I want to quickly find specific notes.              | - The application should provide a search functionality<br> - Users should be able to search notes by titles,content or tags.                                                                                                                 ||
 | **Adding Images to Notes** | As a user, I want to enrich my notes by adding images.         | - The note creation/editing screen should allow users to attach images to notes.<br> - Images should be displayed within the note.                                                                                                            ||
 | **Setting Reminders**      | As a user, I want to set reminders for important notes.        | - Users should be able to set date and time reminders for each note. <br> - The application should notify users when a reminder is due.                                                                                                       ||
-| **Sorting and Ordering**   | As a user, I want flexibility in sorting and ordering my notes | - Notes should be sortable by date, category or alphabetical order. <br> - The user should be able to customize the deault sorting preference.                                                                                                ||
-
+| **Sorting and Ordering**   | As a user, I want flexibility in sorting and ordering my notes | - Notes should be sortable by date, category or alphabetical order. <br> - The user should be able to customize the default sorting preference.                                                                                               ||
+| **Markdown Support**       | As a user, I want to format my notes using Markdown            | - The note editor should support basic Markdown formatting. <br> - Formatted text in the notes should be displayed appropriately                                                                                                              ||
 
 ## Functional Requirements
 
