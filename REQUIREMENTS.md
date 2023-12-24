@@ -18,7 +18,9 @@
 | **Collaborative Editing**        | As a user, I want to collaborate on notes with others.                 | - Notes can be shared with other users. <br> - Collaborators should be able to view and edit shared notes in real-time.                                                                                                                       ||
 | **Version History**              | As a user, I want to track changes and access version history          | - The application should maintain a version history for each note.<br> - users should be able to revert to previous version of a note.                                                                                                        ||
 | **Customizable Themes**          | As a user, I want to personalize the look and feel of the application. | - The application should provide a range of customizable themes. <br> - Users can choose different color schemes or create custom themes.                                                                                                     ||
-| **Integration with Calendar**    | As a user, I want to link notes to specific calendar events            | - Users can associate notes with calendar events within the application. <br> - Clicking on anote should provide a link to the associated calendar event                                                                                      ||
+| **Integration with Calendar**    | As a user, I want to link notes to specific calendar events            | - Users can associate notes with calendar events within the application. <br> - Clicking on a note should provide a link to the associated calendar event                                                                                     ||
+| **Geotagging Support**           | As a user, I want to associate notes with specific locations           | - Users can geotag notes, linking them to specific geographic locations, <br> - The application should display a map view showing notes based on their location                                                                               ||
+
 
 ## Functional Requirements
 
