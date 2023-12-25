@@ -17,12 +17,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.myth.tdd_note_app.presentation.notes_list.components.HintTextField
+import com.myth.tdd_note_app.presentation.save_edit_note.components.HintTextField
 import com.myth.tdd_note_app.presentation.save_edit_note.events.AddEditEvent
 import com.myth.tdd_note_app.presentation.save_edit_note.events.UiEvent
 import kotlinx.coroutines.flow.collectLatest
@@ -38,8 +37,6 @@ fun SaveEditScreen(
     val contentState = viewModel.noteContent.value
 
     val snackBarHostState = remember { SnackbarHostState() }
-
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
