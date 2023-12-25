@@ -9,6 +9,7 @@ import com.myth.tdd_note_app.domain.usecases.UseCases
 import com.myth.tdd_note_app.presentation.notes_list.events.NoteEvent
 import com.myth.tdd_note_app.presentation.notes_list.states.NotesState
 import com.myth.tdd_note_app.presentation.save_edit_note.events.UiEvent
+import com.myth.tdd_note_app.presentation.notes_list.states.SearchWidgetState
 import com.myth.tdd_note_app.presentation.save_edit_note.states.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,10 @@ class NotesListViewModel @Inject constructor(
     val state: State<NotesState> = _state
     private val _query = mutableStateOf(TextFieldState())
     val query: State<TextFieldState> = _query
+
+    private val _searchWidgetState = mutableStateOf(value = SearchWidgetState.CLOSED)
+    val searchWidgetState = _searchWidgetState
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
 
     //    val eventFlow = _eventFlow.asSharedFlow()
@@ -55,17 +60,15 @@ class NotesListViewModel @Inject constructor(
 
             is NoteEvent.SearchNote -> {
                 _query.value = query.value.copy(text = event.query)
-                CoroutineScope(Dispatchers.IO).launch {
-                    useCase.search(event.query).collect { notes ->
-                        _state.value = state.value.copy(notes = notes)
-                    }
-                }
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    useCase.search(event.query).collect { notes ->
+//                        _state.value = state.value.copy(notes = notes)
+//                    }
+//                }
             }
 
             is NoteEvent.ToggleSearchBar -> {
-                _state.value = state.value.copy(
-                    isSearching = !state.value.isSearching
-                )
+                _searchWidgetState.value = event.value
             }
         }
     }
