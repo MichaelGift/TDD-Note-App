@@ -1,6 +1,7 @@
 package com.myth.tdd_note_app.presentation.notes_list
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -37,8 +38,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.myth.tdd_note_app.presentation.notes_list.components.MainAppBar
 import com.myth.tdd_note_app.presentation.notes_list.components.NoteItem
 import com.myth.tdd_note_app.presentation.notes_list.events.NoteEvent
+import com.myth.tdd_note_app.presentation.notes_list.states.SearchWidgetState
 import com.myth.tdd_note_app.presentation.util.Screen
 import kotlinx.coroutines.launch
 
@@ -49,7 +52,8 @@ fun NoteListScreen(
     navController: NavController, viewModel: NotesListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-//    val query = viewModel.query.value
+    val query = viewModel.query.value
+    val searchWidgetState = viewModel.searchWidgetState.value
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -65,22 +69,19 @@ fun NoteListScreen(
             }
         },
         topBar = {
-
-//            SearchBar(
-//                modifier = Modifier.fillMaxWidth(),
-//                query = query.text,
-//                onQueryChange = {viewModel.onEvent(NoteEvent.SearchNote(it))},
-//                onSearch = {viewModel.onEvent(NoteEvent.SearchNote(it))},
-//                active = state.isSearching,
-//                onActiveChange = {viewModel.onEvent(NoteEvent.ToggleSearchBar)},
-//                placeholder = { Text(text = "Search...")}
-//            ){}
-//            CustomTopAppBar(
-//                searchActive = state.isSearching,
-//                searchText = query.text,
-//                onValueChange = { viewModel.onEvent(NoteEvent.SearchNote(it))},
-//                onClickSearchIcon = { viewModel.onEvent(NoteEvent.ToggleSearchBar)}
-//            )
+            MainAppBar(
+                searchWidgetState = searchWidgetState,
+                searchTextState = query.text,
+                onTextChange = { viewModel.onEvent(NoteEvent.SearchNote(it)) },
+                onCloseClicked = {
+                    viewModel.onEvent(NoteEvent.SearchNote(""))
+                    viewModel.onEvent(NoteEvent.ToggleSearchBar(SearchWidgetState.CLOSED))
+                },
+                onSearchClicked = { Log.d("Searched", it) },
+                onSearchTriggered = {
+                    viewModel.onEvent(NoteEvent.ToggleSearchBar(SearchWidgetState.OPENED))
+                }
+            )
         }
     ) { it ->
         Column(
@@ -92,7 +93,10 @@ fun NoteListScreen(
             LazyColumn(
                 state = rememberLazyListState(), modifier = Modifier.fillMaxSize()
             ) {
-                items(state.notes) { note ->
+                items(items = state.notes.filter {
+                    it.title.contains(query.text, ignoreCase = true) ||
+                            it.content.contains(query.text, ignoreCase = true)
+                }) { note ->
 
                     val dismissState = rememberDismissState(
                         confirmValueChange = {
