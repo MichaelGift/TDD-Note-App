@@ -8,7 +8,6 @@ import com.myth.tdd_note_app.domain.usecases.AddNotesUseCase
 import com.myth.tdd_note_app.domain.usecases.DeleteNoteUseCase
 import com.myth.tdd_note_app.domain.usecases.GetNoteByIdUseCase
 import com.myth.tdd_note_app.domain.usecases.GetNotesUseCase
-import com.myth.tdd_note_app.domain.usecases.SearchNoteUseCase
 import com.myth.tdd_note_app.domain.usecases.UseCases
 import com.myth.tdd_note_app.presentation.notes_list.events.NoteEvent
 import kotlinx.coroutines.flow.first
@@ -26,7 +25,6 @@ class NotesListViewModelTest {
     private lateinit var getNotes: GetNotesUseCase
     private lateinit var deleteNotes: DeleteNoteUseCase
     private lateinit var getNoteById: GetNoteByIdUseCase
-    private lateinit var search: SearchNoteUseCase
     private lateinit var useCase: UseCases
     private lateinit var viewModel: NotesListViewModel
 
@@ -42,10 +40,9 @@ class NotesListViewModelTest {
         deleteNotes = DeleteNoteUseCase(repository)
         getNotes = GetNotesUseCase(repository)
         getNoteById = GetNoteByIdUseCase(repository)
-        search = SearchNoteUseCase(repository)
 
         useCase =
-            UseCases(addNotes, deleteNotes, getNotes, getNoteById,search)
+            UseCases(addNotes, deleteNotes, getNotes, getNoteById)
         viewModel = NotesListViewModel(useCase)
 
         repository.addSampleNotes(samples)

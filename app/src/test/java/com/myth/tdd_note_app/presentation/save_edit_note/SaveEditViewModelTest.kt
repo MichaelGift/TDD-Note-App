@@ -9,7 +9,6 @@ import com.myth.tdd_note_app.domain.usecases.AddNotesUseCase
 import com.myth.tdd_note_app.domain.usecases.DeleteNoteUseCase
 import com.myth.tdd_note_app.domain.usecases.GetNoteByIdUseCase
 import com.myth.tdd_note_app.domain.usecases.GetNotesUseCase
-import com.myth.tdd_note_app.domain.usecases.SearchNoteUseCase
 import com.myth.tdd_note_app.domain.usecases.UseCases
 import com.myth.tdd_note_app.presentation.save_edit_note.events.AddEditEvent
 import kotlinx.coroutines.flow.first
@@ -29,7 +28,6 @@ class SaveEditViewModelTest {
     private lateinit var getNotes: GetNotesUseCase
     private lateinit var deleteNotes: DeleteNoteUseCase
     private lateinit var getNoteById: GetNoteByIdUseCase
-    private lateinit var searchNotes: SearchNoteUseCase
     private lateinit var useCase: UseCases
     private lateinit var viewModel: SaveEditViewModel
 
@@ -47,10 +45,9 @@ class SaveEditViewModelTest {
         deleteNotes = DeleteNoteUseCase(repository)
         getNotes = GetNotesUseCase(repository)
         getNoteById = GetNoteByIdUseCase(repository)
-        searchNotes = SearchNoteUseCase(repository)
 
         useCase =
-            UseCases(saveNote, deleteNotes, getNotes, getNoteById, searchNotes)
+            UseCases(saveNote, deleteNotes, getNotes, getNoteById)
 
         viewModel = SaveEditViewModel(useCase, SavedStateHandle(mapOf("noteId" to id)))
 
